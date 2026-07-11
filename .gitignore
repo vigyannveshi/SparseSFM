@@ -1,0 +1,20 @@
+# Build
+build/
+
+# Data frame directories
+0/
+1/
+2/
+3/
+
+# Data
+data/
+
+# Temp
+temp/
+
+# IDE
+.vscode/
+
+# Planning notes
+plan.md
