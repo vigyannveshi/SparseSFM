@@ -58,18 +58,18 @@ constexpr double REPROJECTION_ERROR_THRESHOLD = 3.0; // orig: 3.0
 constexpr int P3P_MIN_INLIERS = 6;
 
 // ----- bundle-adjustments -----
-constexpr int BA_GLOBAL_ITERATIONS = 20; // orig: 50
-constexpr int BA_LOCAL_ITERATIONS = 5; // orig: 10
+constexpr int BA_GLOBAL_ITERATIONS = 10; // orig: 50
+constexpr int BA_LOCAL_ITERATIONS = 10; // orig: 10
 constexpr double BA_LM_LAMBDA = 1e-4;
 constexpr double BA_LM_LAMBDA_SCALE_FACTOR = 10;
 constexpr double BA_ERROR_TOL = 1e-6;
-constexpr double RELATIVE_ERROR_IMPROVEMENT = 1e-3; // orig: 1e-2
+constexpr double RELATIVE_ERROR_IMPROVEMENT = 1e-2; // orig: 1e-2
 
 // ----- pipeline & drivers -----
 constexpr int MAX_INITIALIZATION_TRIALS = 5; 
 constexpr float CULLING_THRESHOLD = 2.0; // 2px
-constexpr int N_REGISTRATION_PASSES = 5; // orig: 3
-constexpr int MATCH_WINDOW_SIZE = 3; // orig: 5
+constexpr int N_REGISTRATION_PASSES = 3; // orig: 3
+constexpr int MATCH_WINDOW_SIZE = 5; // orig: 5
 
 // ----- visualizer ---
 

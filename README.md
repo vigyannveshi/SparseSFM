@@ -4,8 +4,7 @@ A monocular sparse SfM pipeline written from scratch in C++.
 
 ## What it does
 
-Reconstructs a sparse 3D point cloud and camera trajectory from a monocular video sequence of a textured object. The pipeline runs entirely from scratch — no COLMAP, no g2o, no Ceres, only openCV.
-
+Reconstructs a sparse 3D point cloud and camera trajectory from a monocular video sequence of a textured object. The pipeline runs entirely from scratch — no COLMAP, no g2o, no Ceres, only OpenCV.
 
 ## Pipeline overview
 
@@ -16,12 +15,13 @@ Video -> Frame extraction -> Calibration
       -> Essential matrix recovery & pose initialization
       -> Triangulation (initial landmarks)
       -> Incremental P3P+RANSAC registration (windowed covisibility matching)
-      -> Iterative registration
+      -> Iterative registration + local BA
       -> Global Bundle Adjustment (LM with Schur complement)
       -> Pangolin 3D visualization
 ```
 
 ## Implemented from scratch
+
 - Geometric ray-intersection triangulation with cheirality and reprojection guards
 - P3P solver (Gao et al. 2003) with companion matrix quartic root finding
 - RANSAC-P3P pose estimation
@@ -31,6 +31,23 @@ Video -> Frame extraction -> Calibration
 - Scale normalization after BA
 - Windowed covisibility matching
 - Pangolin-based colored point cloud viewer with camera frustums and path
+
+## Results
+
+### BA matrix sparsity structure
+<!-- Add screenshots of B, C, E matrix visualizations here -->
+<img src="images/B.png" width = 400/>
+<img src="images/C.png" width = 400/>
+
+<div style="line-height:0"><img src="images/E_top.png" width="1080" height="15"/><img src="images/E.png" height="60"/></div>
+
+
+### Reconstruction — Before BA
+<img src="images/before_ba.png"/>
+
+### Reconstruction — After BA
+<img src="images/after_ba.png"/>
+<!-- ![After BA](assets/after_ba.png) -->
 
 ## Dependencies
 
@@ -59,26 +76,36 @@ cmake .. -DBUILD_TESTS=OFF
 make -j4
 ```
 
-## Data preparation
+## Data preparation and running
 
-**Calibration:**
-```bash
-./calibrate <video_path> <output_calib_txt_path>
+**Step 1 — Add your video:**
+```
+sparse_sfm/
+└── data/
+    ├── calib.txt      # camera calibration
+    └── vid_3.mp4      # input video
 ```
 
-**Frame extraction** (handled automatically on first run, set `FRAMES_SAMPLING_INTERVAL` in `constants.hpp`):
+**Step 2 — Calibrate your camera:**
 ```bash
-# frames are extracted to data/frames_3/ on first run
+cd build
+./calibrate ../data/calib.mp4 ../data/calib.txt
 ```
 
-## Running
+**Step 3 — Extract frames:**
+```bash
+cd build
+./test_frame_io
+```
+Frames are extracted to `data/frames_3/` at the interval set by `FRAMES_SAMPLING_INTERVAL` in `constants.hpp`.
 
+**Step 4 — Run the pipeline:**
 ```bash
 cd build
 ./sparse_sfm
 ```
 
-Paths to calibration file and frames directory are set in `main.cpp`:
+Paths are set in `main.cpp`:
 ```cpp
 const std::string CALIB_PATH  = "../data/calib.txt";
 const std::string FRAMES_PATH = "../data/frames_3";
