@@ -36,10 +36,10 @@ Video -> Frame extraction -> Calibration
 
 ### BA matrix sparsity structure
 <!-- Add screenshots of B, C, E matrix visualizations here -->
-<img src="images/B.png" width = 400/>
-<img src="images/C.png" width = 400/>
+<img src="images/B.png" width = 300/>
+<img src="images/C.png" width = 300/>
 
-<div style="line-height:0"><img src="images/E_top.png" width="1080" height="15"/><img src="images/E.png" height="60"/></div>
+<div style="line-height:0"><img src="images/E_top.png" width="960" height="15"/><img src="images/E.png" height="80"/></div>
 
 
 ### Reconstruction — Before BA
